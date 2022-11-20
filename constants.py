@@ -1,0 +1,5 @@
+SORT_PRICE_ASC = "precio-asc"
+SORT_PRICE_DESC = "precio-desc"
+SORT_TITLE_ASC = "titulo-asc"
+SORT_TITLE_DESC = "titulo-desc"
+NO_SORT = "sin-ordenar"
