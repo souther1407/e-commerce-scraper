@@ -33,7 +33,7 @@ class Scrapper:
 
     def __executeOrders(self, results: list, orders):
         if len(results) == 0:
-            return
+            return results
 
         if orders.ordenar == SORT_PRICE_ASC:
             results.sort(key=self.sortByPrice)
@@ -44,9 +44,15 @@ class Scrapper:
         elif orders.ordenar == SORT_TITLE_DESC:
             results.sort(key=self.sortByTitle, reverse=True)
 
+        if orders.limite > 0:
+            results = [results[i] for i in range(
+                orders.limite if orders.limite <= len(results) else len(results))]
+
+        return results
+
     def getResults(self, product, orders):
         result = self.marketSources[orders.mercado].searchProducts(product)
 
-        self.__executeOrders(result, orders)
+        result = self.__executeOrders(result, orders)
 
         self.interface.showResults(result)

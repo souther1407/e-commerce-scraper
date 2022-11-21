@@ -20,7 +20,10 @@ parser.add_argument("-m", "--mercado", type=str,
                     default="mercadolibre",
                     required=False,
                     help="selecciona el mercado que querés consultar")
-
+parser.add_argument("-l", "--limite", type=int,
+                    help="selecciona la cantidad max de resultados",
+                    default=-1,
+                    required=False)
 args = parser.parse_args()
 
 # %20 es el espacio en las urls
