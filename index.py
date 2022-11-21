@@ -24,6 +24,15 @@ parser.add_argument("-l", "--limite", type=int,
                     help="selecciona la cantidad max de resultados",
                     default=-1,
                     required=False)
+parser.add_argument("-min", "--minimo", type=int,
+                    help="selecciona un precio mínimo para los resultados",
+                    default=0,
+                    required=False)
+parser.add_argument("-max", "--maximo", type=int,
+                    help="selecciona un precio máximo para los resultados",
+                    default=100000000000000000000000000000000000000,
+                    required=False)
+
 args = parser.parse_args()
 
 # %20 es el espacio en las urls

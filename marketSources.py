@@ -107,7 +107,7 @@ class MercadoLibreMarketSource(MarketSource):
         prices = []
         for result in results:
             prices.append(result.div.div.find(
-                "span", {"class": "price-tag ui-search-price__part shops__price-part"}).span.get_text())
+                "span", {"class": "price-tag ui-search-price__part shops__price-part"}).span.get_text().split(" ")[0])
         return prices
 
     def searchProducts(self, product):

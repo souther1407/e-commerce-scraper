@@ -48,7 +48,12 @@ class Scrapper:
             results = [results[i] for i in range(
                 orders.limite if orders.limite <= len(results) else len(results))]
 
-        return results
+        filtered = []
+        for product in results:
+            if int(product["precio"]) >= orders.minimo and int(product["precio"]) < orders.maximo:
+                filtered.append(product)
+
+        return filtered
 
     def getResults(self, product, orders):
         result = self.marketSources[orders.mercado].searchProducts(product)
