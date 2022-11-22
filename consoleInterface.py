@@ -1,4 +1,22 @@
+from colorama import Fore
+import random
+
+
 class ConsoleInterface:
+    def __init__(self) -> None:
+        self.colors = [Fore.BLUE, Fore.CYAN,
+                       Fore.GREEN, Fore.YELLOW, Fore.MAGENTA, Fore.WHITE, Fore.LIGHTGREEN_EX, Fore.LIGHTBLUE_EX]
+
+    def getRandomColor(self):
+        return self.colors[random.randint(0, len(self.colors)-1)]
+
+    def cleanConsole():
+        pass
+
+    def showScraping(self):
+        print(Fore.BLUE, "Espere....")
+        print(Fore.RESET)
+
     def showResults(self, result):
         print(
             f"------------------------- PRODUCTOS ({len(result)} resultados) ----------------------\r\n")

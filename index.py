@@ -16,7 +16,8 @@ parser.add_argument("-o", "--ordenar", type=str,
                     required=False,
                     default=NO_SORT)
 parser.add_argument("-m", "--mercado", type=str,
-                    choices=["mercadolibre", "amazon", "fullhard"],
+                    choices=["mercadolibre",
+                             "fullhard", "todo", "compragamer"],
                     default="mercadolibre",
                     required=False,
                     help="selecciona el mercado que querés consultar")

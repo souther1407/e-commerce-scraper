@@ -20,7 +20,25 @@ class Scrapper:
             "fullhard": FullHardMarketSource(
             "fullhard",
             "https://www.fullh4rd.com.ar/cat/search/",
-            HTMLComponent("div", {"class": "item product-list"}))
+            HTMLComponent("div", {"class": "item product-list"})),
+
+            "todo": AllMarketSource("todo", "", "", [
+                MercadoLibreMarketSource(
+                    "mercadolibre",
+                    "https://listado.mercadolibre.com.ar/",
+                    HTMLComponent(
+                        "li", {"class": "ui-search-layout__item"}),
+                ),
+                FullHardMarketSource(
+                    "fullhard",
+                    "https://www.fullh4rd.com.ar/cat/search/",
+                    HTMLComponent("div", {"class": "item product-list"}))
+            ]),
+            "compragamer": CompraGamerMarketSource(
+                "compragamer",
+                "https://compragamer.com/",
+                HTMLComponent("cgw-product-alone", {"class": "mat-card card-product ng-star-inserted"}))
+
         }
 
         self.interface = ConsoleInterface()
@@ -56,6 +74,7 @@ class Scrapper:
         return filtered
 
     def getResults(self, product, orders):
+        self.interface.showScraping()
         result = self.marketSources[orders.mercado].searchProducts(product)
 
         result = self.__executeOrders(result, orders)

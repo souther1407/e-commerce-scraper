@@ -35,6 +35,77 @@ class MarketSource:
         return product.replace(" ", "%20")
 
 
+class CompraGamerMarketSource(MarketSource):
+    def __init__(self, name, searchURL, resultHTLMComponent) -> None:
+        super().__init__(name, searchURL, resultHTLMComponent)
+        self.site = "https://compragamer.com"
+
+    def getLinks(self, results):
+        links = []
+        for result in results:
+            links.append(self.site+result.div.contents[0].a.get("href"))
+        return links
+
+    def getPrices(self, results):
+        prices = []
+        for result in results:
+            prices.append(result.div.find(
+                "div", {"class": "contenedor-price"}).h1.span.get_text())
+        return prices
+
+    def getTitles(self, results):
+        titles = []
+        for result in results:
+            titles.append(result.div.find(
+                "div", {"class": "contenidoPrincipal"}).contents[0].find("span").get_text())
+        return titles
+
+    def searchProducts(self, product):
+        total = []
+
+        self.downloader.download(
+            self.searchURL + "?seccion=3&criterio=" + self.parseProductName(product))
+
+        f = open(self.downloader.getFilePath(), "r", encoding="utf8")
+        data = f.read()
+        f.close()
+
+        parser = HTMLParser(data)
+
+        resultsCards = parser.parseResults(
+            self.resultHTLMComponent)
+
+        if len(resultsCards) != 0:
+            links = self.getLinks(resultsCards)
+            titles = self.getTitles(resultsCards)
+            prices = self.getPrices(resultsCards)
+            total += self.createResult(titles, prices, links)
+
+        return total
+
+
+class AllMarketSource(MarketSource):
+
+    def __init__(self, name, searchURL, resultHTLMComponent, marketSources) -> None:
+        super().__init__(name, searchURL, resultHTLMComponent)
+        self.marketSources = marketSources
+
+    def getLinks(self, results):
+        return super().getLinks(results)
+
+    def getPrices(self, results):
+        return super().getPrices(results)
+
+    def getTitles(self, results):
+        return super().getTitles(results)
+
+    def searchProducts(self, product):
+        results = []
+        for marketSource in self.marketSources:
+            results += marketSource.searchProducts(product)
+        return results
+
+
 class FullHardMarketSource(MarketSource):
     def __init__(self, name, searchURL, resultHTLMComponent) -> None:
         super().__init__(name, searchURL, resultHTLMComponent)
