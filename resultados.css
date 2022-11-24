@@ -1,0 +1,39 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.titulo {
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+}
+
+.resultados {
+    padding: 32px 16px;
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+tr {
+    border-bottom: 1px solid #ddd;
+}
+th {
+    padding-bottom: 8px;
+}
+td {
+ padding: 8px;   
+ text-align: center;
+}

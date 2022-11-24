@@ -1,6 +1,6 @@
 from getHtml import HTMLdownloader
 from marketSources import *
-from consoleInterface import ConsoleInterface
+from consoleInterface import *
 from constants import *
 
 
@@ -40,8 +40,7 @@ class Scrapper:
                 HTMLComponent("cgw-product-alone", {"class": "mat-card card-product ng-star-inserted"}))
 
         }
-
-        self.interface = ConsoleInterface()
+        self.interfaces = {"si": FileOutPut(), "no": ConsoleInterface()}
 
     def sortByPrice(self, result):
         return int(result['precio'].split(' ')[0])
@@ -62,21 +61,19 @@ class Scrapper:
         elif orders.ordenar == SORT_TITLE_DESC:
             results.sort(key=self.sortByTitle, reverse=True)
 
-        if orders.limite > 0:
-            results = [results[i] for i in range(
-                orders.limite if orders.limite <= len(results) else len(results))]
-
         filtered = []
         for product in results:
             if int(product["precio"]) >= orders.minimo and int(product["precio"]) < orders.maximo:
                 filtered.append(product)
 
+        if orders.limite > 0:
+            filtered = filtered[0:orders.limite]
+
         return filtered
 
     def getResults(self, product, orders):
-        self.interface.showScraping()
+        self.interfaces[orders.archivo].showScraping()
         result = self.marketSources[orders.mercado].searchProducts(product)
 
         result = self.__executeOrders(result, orders)
-
-        self.interface.showResults(result)
+        self.interfaces[orders.archivo].showResults(result)

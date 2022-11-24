@@ -33,6 +33,11 @@ parser.add_argument("-max", "--maximo", type=int,
                     help="selecciona un precio máximo para los resultados",
                     default=100000000000000000000000000000000000000,
                     required=False)
+parser.add_argument("-arch", "--archivo", type=str,
+                    help="selecciona guardar los resultados en un archivo",
+                    choices=["si", "no"],
+                    default="no",
+                    required=False)
 
 args = parser.parse_args()
 
